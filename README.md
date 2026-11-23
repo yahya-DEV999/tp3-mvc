@@ -48,3 +48,7 @@ La vue affiche les produits dans un tableau Bootstrap avec une pagination.
 
 ![Liste des produits](captures/liste.png)
 
+### 6.2 Page template (Thymeleaf Layout + Bootstrap)
+`layout1.html` contient la structure commune (barre de navigation Bootstrap) et un
+fragment `content1`. Les autres pages s'y insèrent avec `layout:decorate="~{layout1}"`.
+
