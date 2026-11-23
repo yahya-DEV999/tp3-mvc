@@ -29,8 +29,6 @@ automatiquement les opérations CRUD.
 Un `CommandLineRunner` insère 6 produits au démarrage puis les affiche dans la console
 (requêtes SQL visibles grâce à `spring.jpa.show-sql=true`).
 
-![Console DAO](captures/console-dao.png)
-
 ## Étape 5 – Désactivation de la protection par défaut de Spring Security
 Spring Security protège toutes les pages dès qu'il est dans le classpath. Pour développer
 les vues, la configuration automatique est exclue :
@@ -59,8 +57,7 @@ fragment `content1`. Les autres pages s'y insèrent avec `layout:decorate="~{lay
 - `POST /saveProduct` valide le produit avec `@Valid` ; en cas d'erreur, le formulaire est
   réaffiché avec les messages (`th:errors`), sinon le produit est enregistré.
 
-![Formulaire](captures/ajout.png)
-![Validation](captures/validation.png)
+![Formulaire d'ajout](captures/ajout.png)
 
 ## Étape 7 – Sécurisation avec Spring Security
 - Réactivation de Spring Security (suppression de l'`exclude`).
@@ -80,8 +77,8 @@ fragment `content1`. Les autres pages s'y insèrent avec `layout:decorate="~{lay
 | admin | 1234 | USER, ADMIN |
 
 ![Login](captures/login.png)
-![Vue utilisateur](captures/vue-user.png)
-![Accès refusé](captures/not-authorized.png)
+![Déconnexion puis connexion en user1](captures/deconnexion.png)
+![Vue utilisateur (sans boutons admin)](captures/vue-user.png)
 
 ## Étape 8 – Fonctionnalités supplémentaires
 - **Recherche** par mot-clé : `findByNameContainsIgnoreCase(keyword, pageable)` dans le repository,
