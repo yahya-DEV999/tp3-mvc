@@ -31,3 +31,9 @@ Un `CommandLineRunner` insère 6 produits au démarrage puis les affiche dans la
 
 ![Console DAO](captures/console-dao.png)
 
+## Étape 5 – Désactivation de la protection par défaut de Spring Security
+Spring Security protège toutes les pages dès qu'il est dans le classpath. Pour développer
+les vues, la configuration automatique est exclue :
+`@SpringBootApplication(exclude = SecurityAutoConfiguration.class)`.
+Elle sera réactivée à l'étape 7.
+
