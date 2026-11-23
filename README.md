@@ -52,3 +52,13 @@ La vue affiche les produits dans un tableau Bootstrap avec une pagination.
 `layout1.html` contient la structure commune (barre de navigation Bootstrap) et un
 fragment `content1`. Les autres pages s'y insèrent avec `layout:decorate="~{layout1}"`.
 
+### 6.3 Saisie et ajout d'un produit avec validation
+- Contraintes sur l'entité : `@NotEmpty @Size(min=3, max=50)` sur `name`, `@Min(0)` sur `price`,
+  `@Min(1)` sur `quantity`.
+- `GET /newProduct` affiche le formulaire `new-product.html` (`th:object`, `th:field`).
+- `POST /saveProduct` valide le produit avec `@Valid` ; en cas d'erreur, le formulaire est
+  réaffiché avec les messages (`th:errors`), sinon le produit est enregistré.
+
+![Formulaire](captures/ajout.png)
+![Validation](captures/validation.png)
+

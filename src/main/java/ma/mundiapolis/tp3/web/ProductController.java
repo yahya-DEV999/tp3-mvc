@@ -1,11 +1,13 @@
 package ma.mundiapolis.tp3.web;
 
+import jakarta.validation.Valid;
 import ma.mundiapolis.tp3.entities.Product;
 import ma.mundiapolis.tp3.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,5 +42,20 @@ public class ProductController {
     public String delete(@RequestParam Long id, @RequestParam(defaultValue = "0") int page) {
         productRepository.deleteById(id);
         return "redirect:/index?page=" + page;
+    }
+
+    @GetMapping("/newProduct")
+    public String newProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "new-product";
+    }
+
+    @PostMapping("/saveProduct")
+    public String saveProduct(@Valid Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "new-product";
+        }
+        productRepository.save(product);
+        return "redirect:/index";
     }
 }
