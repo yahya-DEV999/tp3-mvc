@@ -17,3 +17,7 @@ Bootstrap Icons (WebJars).
 
 `application.properties` : base H2 en mémoire (MySQL en commentaire), port 8094.
 
+## Étape 2 – Entité JPA `Product`
+Attributs : `id` (Long, clé primaire auto-générée), `name`, `price`, `quantity`.
+Lombok génère getters/setters, constructeurs, builder et `toString()`.
+
