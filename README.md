@@ -62,3 +62,24 @@ fragment `content1`. Les autres pages s'y insèrent avec `layout:decorate="~{lay
 ![Formulaire](captures/ajout.png)
 ![Validation](captures/validation.png)
 
+## Étape 7 – Sécurisation avec Spring Security
+- Réactivation de Spring Security (suppression de l'`exclude`).
+- `SecurityConfig` :
+  - utilisateurs en mémoire (`InMemoryUserDetailsManager`), mots de passe chiffrés avec **BCrypt** ;
+  - page de login personnalisée `/login`, déconnexion vers `/login?logout` ;
+  - règles d'accès : `/user/**` → rôle USER, `/admin/**` → rôle ADMIN ;
+  - page `/notAuthorized` en cas d'accès refusé ;
+  - `@EnableMethodSecurity` + `@PreAuthorize` sur les méthodes du contrôleur.
+- URLs renommées : `/user/index` (consultation), `/admin/newProduct`, `/admin/saveProduct`, `/admin/delete`.
+- Dans les vues, `sec:authorize="hasRole('ADMIN')"` masque les actions admin et
+  `sec:authentication="name"` affiche l'utilisateur connecté.
+
+| Utilisateur | Mot de passe | Rôles |
+|---|---|---|
+| user1, user2 | 1234 | USER |
+| admin | 1234 | USER, ADMIN |
+
+![Login](captures/login.png)
+![Vue utilisateur](captures/vue-user.png)
+![Accès refusé](captures/not-authorized.png)
+

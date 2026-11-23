@@ -5,6 +5,7 @@ import ma.mundiapolis.tp3.entities.Product;
 import ma.mundiapolis.tp3.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,11 +24,12 @@ public class ProductController {
 
     @GetMapping("/")
     public String home() {
-        return "redirect:/index";
+        return "redirect:/user/index";
     }
 
     // Liste des produits avec pagination
-    @GetMapping("/index")
+    @GetMapping("/user/index")
+    @PreAuthorize("hasRole('USER')")
     public String index(Model model,
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "5") int size) {
@@ -38,24 +40,38 @@ public class ProductController {
         return "products";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/admin/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@RequestParam Long id, @RequestParam(defaultValue = "0") int page) {
         productRepository.deleteById(id);
-        return "redirect:/index?page=" + page;
+        return "redirect:/user/index?page=" + page;
     }
 
-    @GetMapping("/newProduct")
+    @GetMapping("/admin/newProduct")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
         return "new-product";
     }
 
-    @PostMapping("/saveProduct")
+    // Sert à la fois à l'ajout et à la mise à jour (id présent ou non)
+    @PostMapping("/admin/saveProduct")
+    @PreAuthorize("hasRole('ADMIN')")
     public String saveProduct(@Valid Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "new-product";
         }
         productRepository.save(product);
-        return "redirect:/index";
+        return "redirect:/user/index";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/notAuthorized")
+    public String notAuthorized() {
+        return "notAuthorized";
     }
 }

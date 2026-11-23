@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="col-md-4 offset-md-4 mt-5">
+        <div class="card">
+            <div class="card-header">Authentification</div>
+            <div class="card-body">
+                <div class="alert alert-danger" th:if="${param.error}">Identifiant ou mot de passe incorrect</div>
+                <div class="alert alert-success" th:if="${param.logout}">Vous êtes déconnecté</div>
+                <form th:action="@{/login}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Utilisateur</label>
+                        <input class="form-control" type="text" name="username" autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mot de passe</label>
+                        <input class="form-control" type="password" name="password">
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

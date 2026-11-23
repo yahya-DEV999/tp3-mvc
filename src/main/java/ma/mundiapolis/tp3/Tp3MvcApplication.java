@@ -5,11 +5,9 @@ import ma.mundiapolis.tp3.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-// Sécurité désactivée temporairement pendant le développement des vues
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class Tp3MvcApplication {
 
     public static void main(String[] args) {

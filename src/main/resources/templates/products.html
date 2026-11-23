@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout1}">
 <head>
     <title>Liste des produits</title>
@@ -12,7 +13,10 @@
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
-                <tr><th>ID</th><th>Nom</th><th>Prix</th><th>Quantité</th><th></th></tr>
+                <tr>
+                    <th>ID</th><th>Nom</th><th>Prix</th><th>Quantité</th>
+                    <th sec:authorize="hasRole('ADMIN')"></th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr th:each="p : ${listProducts}">
@@ -20,8 +24,8 @@
                     <td th:text="${p.name}"></td>
                     <td th:text="${p.price}"></td>
                     <td th:text="${p.quantity}"></td>
-                    <td class="text-end">
-                        <form th:action="@{/delete}" method="post" class="d-inline"
+                    <td sec:authorize="hasRole('ADMIN')" class="text-end">
+                        <form th:action="@{/admin/delete}" method="post" class="d-inline"
                               onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ?')">
                             <input type="hidden" name="id" th:value="${p.id}">
                             <input type="hidden" name="page" th:value="${currentPage}">
@@ -31,9 +35,10 @@
                 </tr>
                 </tbody>
             </table>
+
             <ul class="nav nav-pills">
                 <li th:each="value, item : ${pages}">
-                    <a th:href="@{/index(page=${item.index})}"
+                    <a th:href="@{/user/index(page=${item.index})}"
                        th:class="${currentPage == item.index ? 'btn btn-info ms-1' : 'btn btn-outline-info ms-1'}"
                        th:text="${1 + item.index}"></a>
                 </li>
