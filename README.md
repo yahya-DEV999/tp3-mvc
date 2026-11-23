@@ -37,3 +37,14 @@ les vues, la configuration automatique est exclue :
 `@SpringBootApplication(exclude = SecurityAutoConfiguration.class)`.
 Elle sera réactivée à l'étape 7.
 
+## Étape 6 – Contrôleur Spring MVC et vues Thymeleaf
+
+### 6.1 Liste des produits et suppression
+`ProductController` (`@Controller`) :
+- `GET /index` : récupère une page de produits (`PageRequest`) et la passe à la vue `products.html` ;
+- `POST /delete` : supprime un produit puis redirige vers la liste (avec confirmation JavaScript).
+
+La vue affiche les produits dans un tableau Bootstrap avec une pagination.
+
+![Liste des produits](captures/liste.png)
+

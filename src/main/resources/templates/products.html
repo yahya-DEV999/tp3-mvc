@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des produits</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">Liste des produits</div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr><th>ID</th><th>Nom</th><th>Prix</th><th>Quantité</th><th></th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${listProducts}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${p.price}"></td>
+                    <td th:text="${p.quantity}"></td>
+                    <td class="text-end">
+                        <form th:action="@{/delete}" method="post" class="d-inline"
+                              onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ?')">
+                            <input type="hidden" name="id" th:value="${p.id}">
+                            <input type="hidden" name="page" th:value="${currentPage}">
+                            <button class="btn btn-sm btn-danger" type="submit"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="value, item : ${pages}">
+                    <a th:href="@{/index(page=${item.index})}"
+                       th:class="${currentPage == item.index ? 'btn btn-info ms-1' : 'btn btn-outline-info ms-1'}"
+                       th:text="${1 + item.index}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
