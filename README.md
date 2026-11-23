@@ -21,3 +21,7 @@ Bootstrap Icons (WebJars).
 Attributs : `id` (Long, clé primaire auto-générée), `name`, `price`, `quantity`.
 Lombok génère getters/setters, constructeurs, builder et `toString()`.
 
+## Étape 3 – Interface `ProductRepository`
+`ProductRepository` hérite de `JpaRepository<Product, Long>` : Spring Data fournit
+automatiquement les opérations CRUD.
+
