@@ -25,3 +25,9 @@ Lombok génère getters/setters, constructeurs, builder et `toString()`.
 `ProductRepository` hérite de `JpaRepository<Product, Long>` : Spring Data fournit
 automatiquement les opérations CRUD.
 
+## Étape 4 – Test de la couche DAO
+Un `CommandLineRunner` insère 6 produits au démarrage puis les affiche dans la console
+(requêtes SQL visibles grâce à `spring.jpa.show-sql=true`).
+
+![Console DAO](captures/console-dao.png)
+
