@@ -27,24 +27,29 @@ public class ProductController {
         return "redirect:/user/index";
     }
 
-    // Liste des produits avec pagination
+    // Liste des produits avec recherche et pagination
     @GetMapping("/user/index")
     @PreAuthorize("hasRole('USER')")
     public String index(Model model,
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "5") int size) {
-        Page<Product> products = productRepository.findAll(PageRequest.of(page, size));
+                        @RequestParam(defaultValue = "5") int size,
+                        @RequestParam(defaultValue = "") String keyword) {
+        Page<Product> products = productRepository.findByNameContainsIgnoreCase(keyword, PageRequest.of(page, size));
         model.addAttribute("listProducts", products.getContent());
         model.addAttribute("pages", new int[products.getTotalPages()]);
         model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
         return "products";
     }
 
     @PostMapping("/admin/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public String delete(@RequestParam Long id, @RequestParam(defaultValue = "0") int page) {
+    public String delete(@RequestParam Long id,
+                         @RequestParam(defaultValue = "") String keyword,
+                         @RequestParam(defaultValue = "0") int page) {
         productRepository.deleteById(id);
-        return "redirect:/user/index?page=" + page;
+        return "redirect:/user/index?page=" + page + "&keyword="
+                + java.net.URLEncoder.encode(keyword, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @GetMapping("/admin/newProduct")
@@ -59,10 +64,19 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public String saveProduct(@Valid Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "new-product";
+            return product.getId() == null ? "new-product" : "edit-product";
         }
         productRepository.save(product);
         return "redirect:/user/index";
+    }
+
+    @GetMapping("/admin/editProduct")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String editProduct(@RequestParam Long id, Model model) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produit introuvable : " + id));
+        model.addAttribute("product", product);
+        return "edit-product";
     }
 
     @GetMapping("/login")

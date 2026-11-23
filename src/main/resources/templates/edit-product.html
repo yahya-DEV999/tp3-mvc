@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout1}">
+<head>
+    <title>Modifier un produit</title>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">Modifier le produit</div>
+            <div class="card-body">
+                <form th:action="@{/admin/saveProduct}" method="post" th:object="${product}">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label class="form-label">ID</label>
+                        <input class="form-control" type="text" th:value="*{id}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nom</label>
+                        <input class="form-control" type="text" th:field="*{name}">
+                        <span class="text-danger" th:errors="*{name}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Prix</label>
+                        <input class="form-control" type="number" step="0.01" th:field="*{price}">
+                        <span class="text-danger" th:errors="*{price}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantité</label>
+                        <input class="form-control" type="number" th:field="*{quantity}">
+                        <span class="text-danger" th:errors="*{quantity}"></span>
+                    </div>
+                    <button class="btn btn-success" type="submit">Mettre à jour</button>
+                    <a class="btn btn-secondary" th:href="@{/user/index}">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -83,3 +83,33 @@ fragment `content1`. Les autres pages s'y insèrent avec `layout:decorate="~{lay
 ![Vue utilisateur](captures/vue-user.png)
 ![Accès refusé](captures/not-authorized.png)
 
+## Étape 8 – Fonctionnalités supplémentaires
+- **Recherche** par mot-clé : `findByNameContainsIgnoreCase(keyword, pageable)` dans le repository,
+  formulaire de recherche sur la liste ; le mot-clé est conservé dans la pagination et après suppression.
+- **Édition / mise à jour** : `GET /admin/editProduct?id=` affiche `edit-product.html` pré-rempli ;
+  `POST /admin/saveProduct` met à jour le produit (même méthode que l'ajout, avec l'`id`).
+- **Tests** : `ProductControllerTest` (MockMvc + spring-security-test) vérifie la redirection vers
+  le login, l'affichage de la liste, la recherche, le refus d'accès admin à un USER, la validation,
+  l'ajout et la suppression.
+
+![Recherche](captures/recherche.png)
+![Édition](captures/edition.png)
+
+## Structure finale
+```
+src/main/java/ma/mundiapolis/tp3
+ ├── Tp3MvcApplication.java
+ ├── entities/Product.java
+ ├── repository/ProductRepository.java
+ ├── security/SecurityConfig.java
+ └── web/ProductController.java
+src/main/resources/templates
+ ├── layout1.html  ├── products.html  ├── new-product.html
+ ├── edit-product.html  ├── login.html  └── notAuthorized.html
+```
+
+## Lancer le projet
+1. IntelliJ → File → Open → `tp3-mvc`
+2. Lancer `Tp3MvcApplication`
+3. http://localhost:8094 → se connecter avec `admin` / `1234`
+
